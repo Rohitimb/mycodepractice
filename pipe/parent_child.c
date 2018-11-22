@@ -9,7 +9,7 @@ int main()
 	char msgsnd[24] = "Hello pipe";
 	char msgrcv[24];
 	
-	if(pipe(pipefd) < 0)
+	if(pipe(pipefd) == -1)
 	{
 		perror("pipe");
 		return (EXIT_SUCCESS);
@@ -20,7 +20,7 @@ int main()
 	
 	if(fork() == 0)
 	{//child
-		if (read(pipefd[0],msgrcv,sizeof(msgrcv)) < 0)
+		if (read(pipefd[0],msgrcv,sizeof(msgrcv)) == -1)
 		{
 			perror("read");
 			return (EXIT_SUCCESS);
@@ -30,11 +30,12 @@ int main()
 	else
 	{//parent
 		printf("writing to pipe in parent process = %s\n",msgsnd);
-		if (write(pipefd[1],msgsnd,strlen(msgsnd)) < 0)
+		if (write(pipefd[1],msgsnd,strlen(msgsnd)) == -1)
 		{
 			perror("write");
 			return (EXIT_SUCCESS);
 		}
 	}
-	return 0;
+	
+	return (EXIT_SUCCESS);
 }

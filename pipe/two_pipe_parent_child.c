@@ -10,13 +10,13 @@ int main()
 	char msgbufsnd[24] = "msg to be send";
 	char msgbufrcv[24] = "";
 	
-	if(pipe(p) < 0)
+	if(pipe(p) == -1)
 	{
 		perror("pipe");
 		return (EXIT_FAILURE);
 	}
 	
-	if(pipe(q) < 0)
+	if(pipe(q) == -1)
 	{
 		perror("pipe");
 		return (EXIT_FAILURE);
@@ -27,7 +27,7 @@ int main()
 		close(p[1]);
 		close(q[0]);
 
-		if(read(p[0],msgbufrcv,sizeof(msgbufrcv)) < 0)
+		if(read(p[0],msgbufrcv,sizeof(msgbufrcv)) == -1)
 		{
 			perror("read");
 			return (EXIT_FAILURE);
@@ -39,7 +39,7 @@ int main()
 				msgbufrcv[i] = toupper(msgbufrcv[i]);
 		}
 		printf("sent from pipe 2 = %s\n",msgbufrcv);
-		if(write(q[1],msgbufrcv,strlen(msgbufrcv) + 1) < 0)
+		if(write(q[1],msgbufrcv,strlen(msgbufrcv) + 1) == -1)
 		{
 			perror("write");
 			return (EXIT_FAILURE);
@@ -51,18 +51,18 @@ int main()
 		close(p[0]);
 		close(q[1]);
 		printf("sent from pipe 1 = %s\n",msgbufsnd);
-		if(write(p[1],msgbufsnd,strlen(msgbufsnd) + 1) < 0)
+		if(write(p[1],msgbufsnd,strlen(msgbufsnd) + 1) == -1)
 		{
 			perror("write");
 			return (EXIT_FAILURE);
 		}
 
-		if(read(q[0],msgbufrcv,sizeof(msgbufrcv)) < 0)
+		if(read(q[0],msgbufrcv,sizeof(msgbufrcv)) == -1)
 		{
 			perror("read");
 			return (EXIT_FAILURE);
 		}
 		printf("Received from pipe 2 = %s\n",msgbufrcv);
 	}
-	return 0;
+	return (EXIT_SUCCESS);
 }

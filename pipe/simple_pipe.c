@@ -9,7 +9,7 @@ int main()
 	char msgsnd[24] = "Hello pipe";
 	char msgrcv[24] = "Hello pipe";
 	
-	if(pipe(pipefd) < 0)
+	if(pipe(pipefd) == -1)
 	{
 		perror("pipe");
 		return (EXIT_FAILURE);
@@ -20,13 +20,13 @@ int main()
 	
 	printf("message send from pipe = %s\n",msgsnd);
 	
-	if(write(pipefd[1],msgsnd,strlen(msgsnd)+1) < 0)
+	if(write(pipefd[1],msgsnd,strlen(msgsnd)+1) == -1)
 	{
 		perror("write");
 		return (EXIT_FAILURE);
 	}
 	
-	if(read(pipefd[0],msgrcv,sizeof(msgrcv)) < 0)
+	if(read(pipefd[0],msgrcv,sizeof(msgrcv)) == -1)
 	{
 		perror("read");
 		return (EXIT_FAILURE);
@@ -34,5 +34,5 @@ int main()
 	
 	printf("message read from pipe = %s\n",msgrcv);
 	
-	return 0;
+	return (EXIT_SUCCESS);
 }
