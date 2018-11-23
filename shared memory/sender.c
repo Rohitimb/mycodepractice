@@ -14,12 +14,19 @@ struct msgbuf
 
 int main()
 {
+	key_t key;
 	int id,i;
-	int SHM_KEY = 5;
 	
-	struct msgbuf *s;	
+	struct msgbuf *s;
+	
+	key = ftok("data.txt",65);
+	if(key == -1)
+	{
+		perror("ftok");
+		return (EXIT_FAILURE);
+	}
 
-	id = shmget(SHM_KEY,sizeof(struct msgbuf),IPC_CREAT | 0644);
+	id = shmget(key,sizeof(struct msgbuf),IPC_CREAT | 0644);
 	if(id == -1)
 	{
 		perror("shmget");
