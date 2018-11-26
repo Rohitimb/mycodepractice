@@ -43,6 +43,7 @@ int main()
 
 	strcpy(s->str,"This is just a test message");
 	
+	s->flag = -1;
 	for(i=0;i<5;i++)
 	{
 		s->flag = i+1;

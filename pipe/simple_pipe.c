@@ -7,7 +7,7 @@ int main()
 {
 	int pipefd[2];
 	char msgsnd[24] = "Hello pipe";
-	char msgrcv[24] = "Hello pipe";
+	char msgrcv[24] = {0,};
 	
 	if(pipe(pipefd) == -1)
 	{

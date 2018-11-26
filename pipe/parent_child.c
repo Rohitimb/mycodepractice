@@ -30,7 +30,7 @@ int main()
 	else
 	{//parent
 		printf("writing to pipe in parent process = %s\n",msgsnd);
-		if (write(pipefd[1],msgsnd,strlen(msgsnd)) == -1)
+		if (write(pipefd[1],msgsnd,strlen(msgsnd)+1) == -1)
 		{
 			perror("write");
 			return (EXIT_SUCCESS);
