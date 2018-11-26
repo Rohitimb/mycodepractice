@@ -95,8 +95,7 @@ int main()
 	
 	return (EXIT_SUCCESS);
 }
-#if 1
-	
+
 void critical_section_count(int pid,struct mybuf *ptr,int total_count)
 {
 	int count;
@@ -162,7 +161,7 @@ void critical_section_count(int pid,struct mybuf *ptr,int total_count)
 	if (retval == -1) 
 	{
 	      perror("semop");
-	      return;
+		      return;
    	}
 	
 	count = ptr->cnt;
@@ -198,105 +197,6 @@ void critical_section_count(int pid,struct mybuf *ptr,int total_count)
 	return;
 }	
 
-#else
-void critical_section_count(int pid,struct mybuf *shmp,int total_count)
-{   
-	int cntr;
-	int numtimes;
-	int sleep_time;
-	int semid;
-	struct sembuf sem_buf;
-	// struct semid_ds buf;
-	//int tries;
-	int retval;
-	key_t key;
-	
-	key = ftok("data.txt",55);
-	semid = semget(key, 1, IPC_CREAT | IPC_EXCL | 0666);
-
-	/* Got the semaphore */
-	if (semid > 0) 
-	{
-		printf("First Process\n");
-		sem_buf.sem_op = 1;
-		sem_buf.sem_flg = 0;
-		sem_buf.sem_num = 0;
-		retval = semop(semid, &sem_buf, 1);
-		
-		if (retval == -1) 
-		{
-			perror("Semaphore Operation: ");
-			return;
-		}
-	} 
-	else if (errno == EEXIST) 
-	{ // Already other process got it
-		//int ready = 0;
-		printf("Second Process\n");
-		semid = semget(key, 1, 0);
-		
-		if (semid == -1) 
-		{
-			perror("Semaphore GET: ");
-			return;
-		}
-
-		/* Waiting for the resource */
-		sem_buf.sem_num = 0;
-		sem_buf.sem_op = 0;
-		sem_buf.sem_flg = SEM_UNDO;
-		
-		retval = semop(semid, &sem_buf, 1);
-			
-		if (retval == -1) 
-		{
-			perror("Semaphore Locked: ");
-			return;
-		}
-	}
-	sem_buf.sem_num = 0;
-	sem_buf.sem_op = -1; /* Allocating the resources */
-	sem_buf.sem_flg = SEM_UNDO;
-	retval = semop(semid, &sem_buf, 1);
-
-	if (retval == -1) {
-		perror("Semaphore Locked: ");
-		return;
-	}
-	cntr = shmp->cnt;
-	shmp->wc = 0;
-	if (pid == 0)
-		printf("SHM_WRITE: CHILD: Now writing\n");
-	else if (pid > 0)
-		printf("SHM_WRITE: PARENT: Now writing\n");
-	//printf("SHM_CNTR is %d\n", shmp->cntr);
-
-	/* Increment the counter in shared memory by total_count in steps of 1 */
-	for (numtimes = 0; numtimes < total_count; numtimes++) {
-		cntr += 1;
-		shmp->cnt = cntr;
-		/* Sleeping for a second for every thousand */
-		sleep_time = cntr % 1000;
-		if (sleep_time == 0)
-			sleep(0.5);
-	}
-	shmp->wc = 1;
-	sem_buf.sem_op = 1; /* Releasing the resource */
-	retval = semop(semid, &sem_buf, 1);
-
-	if (retval == -1) {
-		perror("Semaphore Locked\n");
-		return;
-	}
-
-	if (pid == 0)
-		printf("SHM_WRITE: CHILD: Writing Done\n");
-	else if (pid > 0)
-		printf("SHM_WRITE: PARENT: Writing Done\n");
-	return;
-}
-
-#endif
 void remove_semaphore() 
 {
 	int semid;
