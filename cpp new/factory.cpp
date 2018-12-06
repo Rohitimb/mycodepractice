@@ -40,7 +40,7 @@ mobile* mobile::createobj(mtype t)
 		return new blackberry();
 	}
 	else
-			return NULL;
+		return NULL;
 }
 
 class client
