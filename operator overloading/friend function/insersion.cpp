@@ -7,26 +7,32 @@ class A
 	private:
 		int x,y;
 	public:
-		A():x(10),y(20)
-		{
-			cout << "default constructor" << endl;
-		}
-		A(int i,int j):x(i),y(i)
-		{
-			cout << "parameterized constructor" << endl;
-		}
-		~A()
-		{
-			cout << "destructor" << endl;
-		}
-	
+		A();
+		A(int,int);
+		~A();
+		void print();
 		friend ostream& operator << (ostream& out, A& ob);
-
-		void print()
-		{
-			cout << "x = " << x << " y = " << y << endl;
-		}
 };
+
+A :: A():x(10),y(20)
+{
+		cout << "default constructor" << endl;
+}
+
+A :: A(int i,int j):x(i),y(i)
+{
+		cout << "parameterized constructor" << endl;
+}
+
+A :: ~A()
+{
+		cout << "destructor" << endl;
+}
+
+void A :: print()
+{
+		cout << "x = " << x << " y = " << y << endl;
+}
 
 ostream& operator << (ostream& out, A& ob)
 {
