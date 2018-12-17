@@ -48,7 +48,7 @@ int main()
     if(auto tmp = weak1.lock())
         cout << "x = " <<tmp->get() << endl;
     else
-		cout << "weak1 is expired" << endl;
+	cout << "weak1 is expired" << endl;
   
     if(auto tmp = weak2.lock())
         cout << "x = " <<tmp->get() << endl;
