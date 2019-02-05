@@ -1,0 +1,10 @@
+Duplicate entry for SAP Description name 301 AVM WHITE/WHITE
+Not able to get metric_definition_id for End of Service Life for SAP Description name 301AVM-S
+Duplicate entry for SAP Description name 301 AVM BLACK
+Not able to get metric_definition_id for End of Service Life for SAP Description name FREESTYLE SPEAKER BLACK LEFT
+Duplicate entry for SAP Description name ACOUSTIMASS 3 BLACK SECOND
+Duplicate entry for SAP Description name ACOUSTIMASS 5 II BLACK
+Duplicate entry for SAP Description name ACOUSTIMASS 5 II WHITE
+Duplicate entry for SAP Description name AWMS II CD2000 110 VOLT
+Duplicate entry for SAP Description name 201 III BLACK
+Duplicate entry for SAP Description name 301 III BLACK LEFT
